@@ -1,0 +1,10 @@
+Private Sub Form1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles Me.KeyPress
+    If e.KeyChar = "a" Then
+        pbPlayer.Left += 5
+
+    End If
+    If e.KeyChar = "w" Then
+        pbPlayer.Top -= 5
+    End If
+
+End Sub
