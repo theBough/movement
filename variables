@@ -1,0 +1,4 @@
+#Region "Variables"
+    Dim leftRigtSpeed As Integer = 5
+    Dim upDownSpeed As Integer = 5
+#End Region
