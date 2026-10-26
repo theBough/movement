@@ -1,0 +1,11 @@
+Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+    If e.KeyCode = Keys.Up Then
+        If upDownSpeed = -5 Then
+            leftRigtSpeed = 0
+            upDownSpeed = 0
+        Else
+            leftRigtSpeed = 0
+            upDownSpeed = -5
+        End If
+    End If
+End Sub
