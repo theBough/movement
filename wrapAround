@@ -1,0 +1,7 @@
+ Sub wrapAround()
+     'You will need 8 if-Blocks 
+     'One for each edge for each pbPlayer
+     If pbPlayer.Left < 0 Then
+         pbPlayer.Left = Me.Width - pbPlayer.Width
+     End If
+ End Sub
