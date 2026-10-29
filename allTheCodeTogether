@@ -1,0 +1,70 @@
+Public Class Form1
+#Region "Variables"
+    Dim leftRigtSpeed As Integer = 5
+    Dim upDownSpeed As Integer = 5
+#End Region
+    Sub collision(thisEnemy As PictureBox, thisPlayer As PictureBox)
+        If (thisPlayer.Bounds.IntersectsWith(thisEnemy.Bounds)) Then
+            thisPlayer.BackColor = Color.Red
+        End If
+    End Sub
+    Sub wrapAround(thisPlayer As PictureBox)
+
+        If thisPlayer.Left < 0 Then
+            'the player has gone off the left side
+            thisPlayer.Left = Me.Width - thisPlayer.Width
+        End If
+        If thisPlayer.Top < 0 Then
+            'The player has gone off the top
+            thisPlayer.Top = Me.Height - thisPlayer.Height
+        End If
+        If thisPlayer.Top > Me.Height Then
+            'The player has gone off the bottom.
+            thisPlayer.Top = 0
+        End If
+        If thisPlayer.Right > Me.Width Then
+            'The player has gone off the right.
+            thisPlayer.Left = 0
+        End If
+
+    End Sub
+    Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+        If e.KeyCode = Keys.Up Then
+            wrapAround(pbPLayerKeyUp)
+            If upDownSpeed = -5 Then
+                leftRigtSpeed = 0
+                upDownSpeed = 0
+            Else
+                leftRigtSpeed = 0
+                upDownSpeed = -5
+            End If
+        End If
+    End Sub
+    Private Sub Form1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles Me.KeyPress
+        wrapAround(pbPlayer)
+        If e.KeyChar = "a" Then
+            pbPlayer.Left -= 5
+        End If
+        If e.KeyChar = "w" Then
+            pbPlayer.Top -= 5
+        End If
+        If e.KeyChar = "s" Then
+            pbPlayer.Top += 5
+        End If
+
+        If e.KeyChar = "q" Then
+            Close()
+        End If
+    End Sub
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        pbPLayerKeyUp.Left += leftRigtSpeed
+        pbPLayerKeyUp.Top += upDownSpeed
+        collision(pbEnemy, pbPlayer)
+    End Sub
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Timer1.Start()
+    End Sub
+
+
+End Class
