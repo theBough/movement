@@ -5,7 +5,8 @@ Public Class Form1
 #End Region
     Sub collision(thisEnemy As PictureBox, thisPlayer As PictureBox)
         If (thisPlayer.Bounds.IntersectsWith(thisEnemy.Bounds)) Then
-            thisPlayer.BackColor = Color.Red
+            thisPlayer.Left = 120
+            thisPlayer.Top = 80
         End If
     End Sub
     Sub wrapAround(thisPlayer As PictureBox)
