@@ -2,7 +2,15 @@ Public Class Form1
 #Region "Variables"
     Dim leftRigtSpeed As Integer = 5
     Dim upDownSpeed As Integer = 5
+    Dim enemyLeftRightSpeed As Integer = 0
+    Dim enemyUpDownSpeed As Integer = 5
 #End Region
+    Private Sub enemyMover_Tick(sender As Object, e As EventArgs) Handles enemyMover.Tick
+        pbEnemy.Top += enemyUpDownSpeed
+        If pbEnemy.Bottom > Me.Height Or pbEnemy.Top < 0 Then
+            enemyUpDownSpeed *= -1
+        End If
+    End Sub
     Sub collision(thisEnemy As PictureBox, thisPlayer As PictureBox)
         If (thisPlayer.Bounds.IntersectsWith(thisEnemy.Bounds)) Then
             thisPlayer.Left = 120
