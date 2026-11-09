@@ -2,13 +2,38 @@ Public Class Form1
 #Region "Variables"
     Dim leftRigtSpeed As Integer = 5
     Dim upDownSpeed As Integer = 5
-    Dim enemyLeftRightSpeed As Integer = 0
     Dim enemyUpDownSpeed As Integer = 5
+    Dim enemyUpDownSpeed2 As Integer = 7
+    Dim enemyUpDownSpeed3 As Integer = 7
+    Dim bullets As New List(Of PictureBox)
 #End Region
+    Sub makeBullet()
+        Dim newBullet As New PictureBox
+        With newBullet
+            .Width = 10
+            .Height = 10
+            .BackColor = Color.Red
+            .Top = pbPlayer.Top
+            .Left = pbPlayer.Left
+        End With
+        Me.Controls.Add(newBullet)
+        bullets.Add(newBullet)
+    End Sub
+
+
     Private Sub enemyMover_Tick(sender As Object, e As EventArgs) Handles enemyMover.Tick
         pbEnemy.Top += enemyUpDownSpeed
+        pbEnemy2.Top += enemyUpDownSpeed2
+        pbEnemy3.Left += enemyUpDownSpeed3
+
         If pbEnemy.Bottom > Me.Height Or pbEnemy.Top < 0 Then
             enemyUpDownSpeed *= -1
+        End If
+        If pbEnemy2.Bottom > Me.Height Or pbEnemy2.Top < 0 Then
+            enemyUpDownSpeed2 *= -1
+        End If
+        If pbEnemy3.Right > Me.Width Or pbEnemy3.Left < 0 Then
+            enemyUpDownSpeed3 *= -1
         End If
     End Sub
     Sub collision(thisEnemy As PictureBox, thisPlayer As PictureBox)
@@ -60,6 +85,12 @@ Public Class Form1
         If e.KeyChar = "s" Then
             pbPlayer.Top += 5
         End If
+        If e.KeyChar = "d" Then
+            pbPlayer.Left += 5
+        End If
+        If e.KeyChar = " " Then
+            makeBullet()
+        End If
 
         If e.KeyChar = "q" Then
             Close()
@@ -69,11 +100,10 @@ Public Class Form1
         pbPLayerKeyUp.Left += leftRigtSpeed
         pbPLayerKeyUp.Top += upDownSpeed
         collision(pbEnemy, pbPlayer)
+        collision(pbEnemy2, pbPlayer)
+        collision(pbEnemy3, pbPlayer)
     End Sub
-
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Timer1.Start()
     End Sub
-
-
 End Class
