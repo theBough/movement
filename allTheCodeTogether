@@ -7,6 +7,18 @@ Public Class Form1
     Dim enemyUpDownSpeed3 As Integer = 7
     Dim bullets As New List(Of PictureBox)
 #End Region
+    Sub winColision()
+        If pbPlayer.Bounds.IntersectsWith(lblFinish.Bounds) Then
+            Timer1.Stop()
+            enemyMover.Stop()
+            bulletMover.Stop()
+            pbEnemy3.Hide()
+            pbEnemy2.Hide()
+            pbEnemy.Hide()
+            lblYouWin.Show()
+        End If
+    End Sub
+
     Sub makeBullet()
         Dim newBullet As New PictureBox
         With newBullet
@@ -20,7 +32,12 @@ Public Class Form1
         bullets.Add(newBullet)
     End Sub
 
+    Sub bulletCollision(thisBullet As Object, thisEnemy As PictureBox)
+        If thisBullet.Bounds.intersectsWith(thisEnemy.Bounds) Then
+            Me.Controls.Remove(thisEnemy)
 
+        End If
+    End Sub
     Private Sub enemyMover_Tick(sender As Object, e As EventArgs) Handles enemyMover.Tick
         pbEnemy.Top += enemyUpDownSpeed
         pbEnemy2.Top += enemyUpDownSpeed2
@@ -98,8 +115,7 @@ Public Class Form1
         End If
     End Sub
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        pbPLayerKeyUp.Left += leftRigtSpeed
-        pbPLayerKeyUp.Top += upDownSpeed
+        winColision()
         collision(pbEnemy, pbPlayer)
         collision(pbEnemy2, pbPlayer)
         collision(pbEnemy3, pbPlayer)
@@ -111,6 +127,8 @@ Public Class Form1
     Private Sub bulletMover_Tick(sender As Object, e As EventArgs) Handles bulletMover.Tick
         For Each thisBullet In bullets
             thisBullet.Left += 5
+            bulletCollision(thisBullet, pbEnemy2)
         Next
+
     End Sub
 End Class
